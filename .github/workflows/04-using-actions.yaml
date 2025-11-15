@@ -1,5 +1,6 @@
 name: 04 Using Actions
-on: push
+on:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -8,5 +9,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Printing Folders
-        run: ls -la
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        working-directory: 04-using-actions/my-app
+        run: npm ci
+
+      - name: Run Unit Tests
+        working-directory: 04-using-actions/my-app
+        run: npm test
