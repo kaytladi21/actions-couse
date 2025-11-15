@@ -15,9 +15,9 @@ jobs:
           node-version: "14"
 
       - name: Install dependencies
-        working-directory: ../04-using-actions/my-app
+        working-directory: ./04-using-actions/my-app
         run: npm ci
 
       - name: Run Unit Tests
-        working-directory: ../04-using-actions/my-app
+        working-directory: ./04-using-actions/my-app
         run: npm test
