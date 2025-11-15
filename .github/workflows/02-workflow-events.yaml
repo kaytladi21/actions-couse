@@ -1,8 +1,5 @@
 name: Workflow Events
 on:
-  push:
-  pull_request:
-  workflow_dispatch:
   schedule:
     - cron: "*/2 * * * *" # Runs every 2 minutes
 
