@@ -1,0 +1,21 @@
+name: 09 Functions
+on:
+  workflow_dispatch:
+
+jobs:
+  echo1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Failing Step
+        run: |
+          echo "This will fail"
+          exit 1
+      - name: I will fail
+        if: success()
+        run: echo "This will fail"
+      - name: I will always execute
+        if: failure()
+        run: echo "I will print if any previous step failed"
+      - name: Not Cancelled
+        if: !cancelled()
+        run: echo "I will run as long as the workflow is not cancelled"
