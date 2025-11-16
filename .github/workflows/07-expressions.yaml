@@ -1,0 +1,21 @@
+name: 07 Using Expressions
+on:
+  push:
+
+  workflow_dispatch:
+    inputs:
+      debug:
+        type: boolean
+        required: true
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - if: ${{inputs.debug}}
+        name: Show Expression Result
+        run: |
+          echo "Triggered by:"
+          echo "${{ github.event_name }}"
+          echo "Branch:"
+          echo "${{ github.ref }}"
