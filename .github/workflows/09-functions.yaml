@@ -17,5 +17,5 @@ jobs:
         if: failure()
         run: echo "I will print if any previous step failed"
       - name: Not Cancelled
-        if: cancelled()
+        if: ${{!cancelled()}}
         run: echo "I will run as long as the workflow is not cancelled"
