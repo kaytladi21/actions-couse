@@ -1,0 +1,23 @@
+name: 11 - Inputs 
+on:
+    workflow_dispatch:
+        inputs:
+        environment:
+            description: 'Deployment environment'
+            required: true
+            default: 'staging'
+            type: choice
+            options:
+            - staging
+            - production
+        version:
+            description: 'Version to deploy'
+            required: true
+            default: '1.0.0'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Show Deployment Info
+            run: echo "Deploying version ${{ inputs.version }} to the ${{ inputs.environment }} environment"
