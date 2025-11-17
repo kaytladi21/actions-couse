@@ -20,4 +20,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Show Deployment Info
-            run: echo "Deploying version ${{ inputs.version }} to the ${{ inputs.environment }} environment"
+              run: echo "Deploying version ${{ inputs.version }} to the ${{ inputs.environment }} environment"
