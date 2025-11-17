@@ -1,0 +1,46 @@
+name: 13 - Caching
+on:
+  workflow_dispatch:
+    inputs:
+      use-cache:
+        description: "Use cache for dependencies"
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: cache
+        if: ${{ inputs.use-cache }}
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: ./04-using-actions/my-app/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        if: ${{  steps.cache-deps.outputs.cache-hit != 'true' }}
+        working-directory: ./04-using-actions/my-app
+        run: npm ci
+
+      - name: Run Unit Tests
+        working-directory: ./04-using-actions/my-app
+        run: npm test
+
+      - name: Build
+        working-directory: ./04-using-actions/my-app
+        run: npm run build
+
+      - name: Deploy
+        working-directory: ./04-using-actions/my-app
+        run: echo "Deploying application..."
