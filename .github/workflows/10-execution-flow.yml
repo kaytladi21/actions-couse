@@ -1,5 +1,6 @@
 name: Exectution Code
 on:
+  push:
   workflow_dispatch:
 
 jobs:
