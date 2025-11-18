@@ -2,14 +2,10 @@ name: 15 Custom Actions
 on:
   workflow_dispatch:
     inputs:
-      node-version:
-        description: "The version of Node.js to use."
+      name:
+        description: "The name to use."
         required: true
-        default: "22"
-      working-directory:
-        description: "The working directory where the Node.js project is located."
-        required: true
-        default: "./04-using-actions/my-app"
+        default: "Toby"
 
 jobs:
   cache:
