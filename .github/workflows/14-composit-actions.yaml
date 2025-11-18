@@ -1,0 +1,22 @@
+name: 14 Composit Actions
+on:
+  workflow_dispatch:
+    inputs:
+      node-version:
+        description: "The version of Node.js to use."
+        required: true
+        default: "22"
+      working-directory:
+        description: "The working directory where the Node.js project is located."
+        required: true
+        default: "./04-using-actions/my-app"
+
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Node and NPM Dependencies
+        uses: ./.github/actions/composite_cache_deps
+        with:
+          node-version: ${{ inputs.node-version }}
+          working-directory: ${{ inputs.working-directory }}

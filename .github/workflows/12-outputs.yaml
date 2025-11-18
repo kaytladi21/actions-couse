@@ -11,7 +11,7 @@ jobs:
       - name: Set Build Version
         id: set_output
         run: |
-          echo "build_version=2.1.0" >> $GITHUB_OUTPUT
+          echo "build_version=2.1.0" >> $GITHUB_OUT
 
   deploy:
     runs-on: ubuntu-latest

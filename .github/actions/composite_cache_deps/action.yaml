@@ -1,0 +1,34 @@
+name: Cache Node and NPM Dependencie
+description: "This action allows to cache both Node and NPM dependencies based on the package-lock.json file."
+
+inputs:
+  node-version:
+    description: "The version of Node.js to use."
+    required: true
+    default: "22"
+  working-directory:
+    description: "The working directory where the Node.js project is located."
+    required: true
+    default: "./04-using-actions/my-app"
+
+  runs:
+    using: "composite"
+    steps:
+      - name: cache
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: ${{ inputs.working-directory }}/node_modules
+          key: node-modules-${{ hashFiles('${{ inputs.working-directory }}/package-lock.json') }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies
+        if: ${{  steps.cache-deps.outputs.cache-hit != 'true' }}
+        run: npm ci
