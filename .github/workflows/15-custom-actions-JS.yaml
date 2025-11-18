@@ -13,6 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Cache Node and NPM Dependencies
-        uses: "./.github/actions/composite_cache_deps"
+        uses: "./.github/actions/js-deps-update"
         with:
           node-version: ${{ inputs.name }}
