@@ -15,5 +15,4 @@ jobs:
       - name: Cache Node and NPM Dependencies
         uses: "./.github/actions/composite_cache_deps"
         with:
-          node-version: ${{ inputs.node-version }}
-          working-directory: ${{ inputs.working-directory }}
+          node-version: ${{ inputs.name }}
