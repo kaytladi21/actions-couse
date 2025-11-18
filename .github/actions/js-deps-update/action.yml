@@ -1,6 +1,12 @@
 name: 13 Update NPM dependencies
 description: Checks if there are updates to NPM packages, and creates a PR with the updated package*.json files
 
+inputs:
+  name:
+    description: "The name to use."
+    required: true
+    default: "Toby"
+
 runs:
   using: "node20"
   main: "index.js"
