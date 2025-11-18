@@ -1,34 +1,34 @@
-name: Cache Node and NPM Dependencie
-description: "This action allows to cache both Node and NPM dependencies based on the package-lock.json file."
-
+name: "Cache Node and NPM Dependencies"
+description: "Cache Node.js and npm dependencies"
 inputs:
   node-version:
-    description: "The version of Node.js to use."
+    description: "Node.js version"
     required: true
     default: "22"
   working-directory:
-    description: "The working directory where the Node.js project is located."
+    description: "Working directory"
     required: true
-    default: "./04-using-actions/my-app"
+    default: "./"
 
-  runs:
-    using: "composite"
-    steps:
-      - name: cache
-        id: cache-deps
-        uses: actions/cache@v3
-        with:
-          path: ${{ inputs.working-directory }}/node_modules
-          key: node-modules-${{ hashFiles('${{ inputs.working-directory }}/package-lock.json') }}
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Cache dependencies
+      id: cache-deps
+      uses: actions/cache@v3
+      with:
+        path: ${{ inputs.working-directory }}/node_modules
+        key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles(format('{0}/package-lock.json', inputs.working-directory)) }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ inputs.node-version }}-
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        if: ${{  steps.cache-deps.outputs.cache-hit != 'true' }}
-        run: npm ci
+    - name: Install dependencies
+      if: steps.cache-deps.outputs.cache-hit != 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: npm ci
