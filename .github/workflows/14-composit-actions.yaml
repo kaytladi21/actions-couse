@@ -15,6 +15,7 @@ jobs:
   cache:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Cache Node and NPM Dependencies
         uses: ./.github/actions/composite_cache_deps
         with:
